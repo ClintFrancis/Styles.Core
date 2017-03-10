@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{D0639B82-177E-4174-8E32-97A111CA5363}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Styles</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Resources\" />
+    <Folder Include="$(MSBuildThisFileDirectory)CSS\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Common\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Colors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\ResourceLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\CssEnums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\CssAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\CssParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\CssTag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Common.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EnumUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\MathUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Range.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\ColorHSB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\ColorHSL.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\ColorLAB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\ColorRGB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\ColorSpace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Colors\ColorXYZ.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\CustomParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\CssParameters.cs" />
+  </ItemGroup>
+</Project>
