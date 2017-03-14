@@ -1,0 +1,6 @@
+src/Styles.Android/bin
+src/Styles.Android/obj
+src/Styles.iOS/bin
+src/Styles.iOS/obj
+src/Styles.NuGet/bin
+src/Styles.NuGet/obj

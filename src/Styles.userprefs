@@ -1,13 +1,5 @@
 ﻿<Properties StartupConfiguration="{FC7E2862-E5A1-4FD4-803C-9A15D9F43FB6}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Styles.Shared/Colors/ColorSpace.cs">
-    <Files>
-      <File FileName="Styles.Shared/Colors/ColorRGB.cs" Line="22" Column="3" />
-      <File FileName="Styles.Shared/CSS/CssParser.cs" Line="67" Column="7" />
-      <File FileName="Styles.Shared/CSS/CustomParser.cs" Line="15" Column="48" />
-      <File FileName="Styles.Shared/CSS/CssTag.cs" Line="23" Column="49" />
-      <File FileName="Styles.Shared/Colors/ColorSpace.cs" Line="34" Column="3" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.ItemProperties.Styles.NuGet HideGettingStarted="True" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Styles.Shared HideGettingStarted="True" />
