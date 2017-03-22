@@ -52,5 +52,68 @@ namespace Styles
 	{
 		double Compare(IColorSpace a, IColorSpace b);
 	}
+
+	public interface IRgb : IColorSpace
+	{
+		double R { get; set; }
+		double G { get; set; }
+		double B { get; set; }
+	}
+
+	public interface IXyz : IColorSpace
+	{
+		double X { get; set; }
+		double Y { get; set; }
+		double Z { get; set; }
+	}
+
+	public interface IHsl : IColorSpace
+	{
+		double H { get; set; }
+		double S { get; set; }
+		double L { get; set; }
+	}
+
+	public interface ILab : IColorSpace
+	{
+		double L { get; set; }
+		double A { get; set; }
+		double B { get; set; }
+	}
+
+	public interface ILch : IColorSpace
+	{
+		double L { get; set; }
+		double C { get; set; }
+		double H { get; set; }
+	}
+
+	public interface ILuv : IColorSpace
+	{
+		double L { get; set; }
+		double U { get; set; }
+		double V { get; set; }
+	}
+
+	public interface IYxy : IColorSpace
+	{
+		double Y1 { get; set; }
+		double X { get; set; }
+		double Y2 { get; set; }
+	}
+
+	public interface IHsb : IColorSpace
+	{
+		double H { get; set; }
+		double S { get; set; }
+		double B { get; set; }
+	}
+
+	public interface IHunterLab : IColorSpace
+	{
+		double L { get; set; }
+		double A { get; set; }
+		double B { get; set; }
+	}
 }
 

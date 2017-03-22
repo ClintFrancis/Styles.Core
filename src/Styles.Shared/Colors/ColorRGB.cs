@@ -1,13 +1,6 @@
 ﻿using System;
 namespace Styles
 {
-	public interface IRgb : IColorSpace
-	{
-		double R { get; set; }
-		double G { get; set; }
-		double B { get; set; }
-	}
-
 	public partial struct ColorRGB : IRgb
 	{
 		public static readonly ColorRGB Empty = new ColorRGB(0, 0, 0, 0);
