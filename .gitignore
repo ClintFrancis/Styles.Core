@@ -4,3 +4,5 @@ src/Styles.iOS/bin
 src/Styles.iOS/obj
 src/Styles.NuGet/bin
 src/Styles.NuGet/obj
+src/Styles.Shared/bin
+src/Styles.Shared/obj
