@@ -18,6 +18,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Colors\Utils\" />
     <Folder Include="$(MSBuildThisFileDirectory)Colors\Conversions\" />
     <Folder Include="$(MSBuildThisFileDirectory)Colors\Comparisons\" />
+    <Folder Include="$(MSBuildThisFileDirectory)CSS\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Resources\ResourceLoader.cs" />
@@ -52,5 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Colors\Conversions\ConvertRGB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Colors\Conversions\ConvertXYZ.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Colors\Comparisons\CieDe2000Comparison.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSS\Utils\ParserUtils.cs" />
   </ItemGroup>
 </Project>

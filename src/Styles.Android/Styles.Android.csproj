@@ -53,7 +53,12 @@
     <Folder Include="Colors\" />
     <Folder Include="Bitmaps\" />
   </ItemGroup>
-  <Import Project="..\Styles.Shared\Styles.Shared.projitems" Label="Shared" Condition="Exists('..\Styles.Shared\Styles.Shared.projitems')" />
+  <ItemGroup>
+    <ProjectReference Include="..\Styles.Shared\Styles.Shared.csproj">
+      <Project>{F7DE4405-3FCD-497D-B1B1-BC8351C5804B}</Project>
+      <Name>Styles.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.targets')" />
 </Project>

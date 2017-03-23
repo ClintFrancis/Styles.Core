@@ -1,6 +1,5 @@
 ﻿<Properties StartupConfiguration="{FC7E2862-E5A1-4FD4-803C-9A15D9F43FB6}|Default">
   <MonoDevelop.Ide.Workbench />
-  <MonoDevelop.Ide.ItemProperties.Styles.NuGet HideGettingStarted="True" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Styles.Shared HideGettingStarted="True" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{34907A02-49EA-4077-A02A-BD290686986C}</ProjectGuid>
-    <Description>Styles Core Library</Description>
-    <PackageId>Styles</PackageId>
+    <ProjectGuid>{70B0548A-EEF7-44A6-B819-D6D9175E3676}</ProjectGuid>
+    <Description>Temp</Description>
+    <PackageId>Styles.NuGet</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
-    <Authors>Clinton Francis</Authors>
+    <Authors>Clint Francis</Authors>
     <DevelopmentDependency>false</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Styles</RootNamespace>
+    <RootNamespace>Styles.NuGet</RootNamespace>
     <UsePartialTypes>false</UsePartialTypes>
     <AssemblyName>Styles.NuGet</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -28,6 +28,17 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="readme.txt">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging">
+      <Version>0.1.157-dev</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Styles.Android\Styles.Android.csproj">
       <Project>{FC7E2862-E5A1-4FD4-803C-9A15D9F43FB6}</Project>
       <Name>Styles.Android</Name>
@@ -36,12 +47,10 @@
       <Project>{4136A2FB-1B10-4597-8459-19E2723756CB}</Project>
       <Name>Styles.iOS</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="NuGet.Build.Packaging">
-      <Version>0.1.157-dev</Version>
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
+    <ProjectReference Include="..\Styles.Shared\Styles.Shared.csproj">
+      <Project>{F7DE4405-3FCD-497D-B1B1-BC8351C5804B}</Project>
+      <Name>Styles.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
   <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets')" />
