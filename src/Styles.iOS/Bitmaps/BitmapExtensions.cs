@@ -40,6 +40,11 @@ namespace Styles
 			}
 		}
 
+		public static Bitmap ToBitmap(this UIImage image)
+		{
+			return image.ToBitmap(CGSize.Empty);
+		}
+
 		public static Bitmap ToBitmap(this UIImage image, CGSize scaledSize)
 		{
 			if (scaledSize == CGSize.Empty)
@@ -65,6 +70,7 @@ namespace Styles
 
 			return new Bitmap(width, height, pixelData);
 		}
+
 	}
 }
 
