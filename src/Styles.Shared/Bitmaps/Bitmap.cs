@@ -38,7 +38,7 @@ namespace Styles
 				{
 					var pixel = ((Width * y) + x) * BytesPerPixel;
 
-					var color = ColorRGB.FromRGB(
+					var color = new ColorRGB(
 						BitmapData[pixel + 0],
 						BitmapData[pixel + 1],
 						BitmapData[pixel + 2]

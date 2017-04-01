@@ -48,7 +48,7 @@ namespace Styles
 			g = g > 0.0031308 ? 1.055 * Math.Pow (g, 1 / 2.4) - 0.055 : 12.92 * g;
 			b = b > 0.0031308 ? 1.055 * Math.Pow (b, 1 / 2.4) - 0.055 : 12.92 * b;
 
-			return ColorRGB.FromRGB (ToRgb (r), ToRgb (g), ToRgb (b));
+			return new ColorRGB (ToRgb (r), ToRgb (g), ToRgb (b));
 		}
 
 		private static int ToRgb (double n)
