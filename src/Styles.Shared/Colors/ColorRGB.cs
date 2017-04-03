@@ -34,50 +34,26 @@ namespace Styles
 		#region Accessors
 		public double R
 		{
-			get
-			{
-				return red;
-			}
-			set
-			{
-				red = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return red; }
+			set { red = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
 		}
 
 		public double G
 		{
-			get
-			{
-				return green;
-			}
-			set
-			{
-				green = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return green; }
+			set { green = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
 		}
 
 		public double B
 		{
-			get
-			{
-				return blue;
-			}
-			set
-			{
-				blue = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return blue; }
+			set { blue = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
 		}
 
 		public double A
 		{
-			get
-			{
-				return Math.Round(alpha, 2);
-			}
-			set
-			{
-				alpha = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return Math.Round(alpha, 2); }
+			set { alpha = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
 		}
 
 		public double AlphaRaw
@@ -103,9 +79,9 @@ namespace Styles
 
 		public ColorRGB(int r, int g, int b, double a = 1)
 		{
-			red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255;
-			green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255;
-			blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255;
+			red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255d;
+			green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255d;
+			blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255d;
 			alpha = (a > 1) ? 1 : ((a < 0) ? 0 : a);
 		}
 
@@ -164,21 +140,19 @@ namespace Styles
 						blue = Convert.ToInt32(colorString.Substring(6, 2), 16);
 						return new ColorRGB(red, green, blue, (alpha / 255d));
 					}
-
 				default:
 					throw new ArgumentOutOfRangeException(string.Format("Invalid color value {0} is invalid. It should be a hex value of the form #RBG, #RRGGBB", hexString));
 			}
 		}
 
-		public static ColorRGB FromHex(int hexValue)
+		public static ColorRGB FromRGB(uint rgb)
 		{
-			// TODO switch on whether this contains an alpha value
-			//throw new NotImplementedException();
+			return new ColorRGB() { ValueRGB = rgb	};
+		}
 
-			return new ColorRGB()
-			{
-				ValueRGB = hexValue	
-			};
+		public static ColorRGB FromARGB(uint argb)
+		{
+			return new ColorRGB() { ValueARGB = argb };
 		}
 
 		public string ToHex()
@@ -191,7 +165,7 @@ namespace Styles
 			return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", (int)Math.Ceiling(alpha * 255), (int)(red * 255), (int)(green * 255), (int)(blue * 255));
 		}
 
-		public int ValueRGB
+		public uint ValueRGB
 		{
 			get{
 				var r = red.ToUInt8();
@@ -202,28 +176,28 @@ namespace Styles
 			}
 
 			set{
-				red = ((value >> 16) & 0xFF)/255;
-				green = ((value >> 8) & 0xFF)/255;
-				blue = (value & 0xFF) / 255;
+				red = ((value >> 16) & 0xFF)/255d;
+				green = ((value >> 8) & 0xFF)/255d;
+				blue = (value & 0xFF) / 255d;
 			}
 		}
 
-		public int ValueRGBA
+		public uint ValueARGB
 		{
 			get {
+				var a = alpha.ToUInt8();
 				var r = red.ToUInt8();
 				var g = green.ToUInt8();
 				var b = blue.ToUInt8();
-				var a = alpha.ToUInt8();
 
-				return r << 24 | g << 16 | b << 8 | a;
+				return a << 24 | r << 16 | g << 8 | b;
 			}
 
 			set {
-				red = ((value >> 24) & 0xFF) / 255;
-				green = ((value >> 16) & 0xFF) / 255;
-				blue = ((value >> 8) & 0xFF) / 255;
-				alpha = (value & 0xFF)/100;
+				alpha = ((value >> 24) & 0xFF) / 255d;
+				red = ((value >> 16) & 0xFF) / 255d;
+				green = ((value >> 8) & 0xFF) / 255d;
+				blue = (value & 0xFF)/255d;
 			}
 		}
 	}
