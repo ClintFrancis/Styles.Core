@@ -40,7 +40,7 @@ namespace Styles
 			}
 			set
 			{
-				hue = MathUtils.Wrap(Math.Round(value), 360);
+				hue = MathUtils.Wrap(Math.Round(value, 2), 360);
 			}
 		}
 
@@ -52,7 +52,7 @@ namespace Styles
 			}
 			set
 			{
-				value = Math.Round(value, 3);
+				value = Math.Round(value, 4);
 				saturation = (value > 1) ? 1 : ((value < 0) ? 0 : value);
 			}
 		}
@@ -65,7 +65,7 @@ namespace Styles
 			}
 			set
 			{
-				value = Math.Round(value, 3);
+				value = Math.Round(value, 4);
 				luminance = (value > 1) ? 1 : ((value < 0) ? 0 : value);
 
 			}

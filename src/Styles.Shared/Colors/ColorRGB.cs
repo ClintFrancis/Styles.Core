@@ -35,19 +35,28 @@ namespace Styles
 		public double R
 		{
 			get { return red; }
-			set { red = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
+			set {
+				value = Math.Round(value, 4);
+				red = (value > 1) ? 1 : ((value < 0) ? 0 : value); 
+			}
 		}
 
 		public double G
 		{
 			get { return green; }
-			set { green = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
+			set { 
+				value = Math.Round(value, 4);
+				green = (value > 1) ? 1 : ((value < 0) ? 0 : value); 
+			}
 		}
 
 		public double B
 		{
 			get { return blue; }
-			set { blue = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
+			set { 
+				value = Math.Round(value, 4);
+				blue = (value > 1) ? 1 : ((value < 0) ? 0 : value); 
+			}
 		}
 
 		public double A
@@ -74,14 +83,6 @@ namespace Styles
 			red = (r > 1) ? 1 : ((r < 0) ? 0 : r);
 			green = (g > 1) ? 1 : ((g < 0) ? 0 : g);
 			blue = (b > 1) ? 1 : ((b < 0) ? 0 : b);
-			alpha = (a > 1) ? 1 : ((a < 0) ? 0 : a);
-		}
-
-		public ColorRGB(int r, int g, int b, double a = 1)
-		{
-			red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255d;
-			green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255d;
-			blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255d;
 			alpha = (a > 1) ? 1 : ((a < 0) ? 0 : a);
 		}
 
@@ -150,6 +151,25 @@ namespace Styles
 			return new ColorRGB() { ValueRGB = rgb	};
 		}
 
+		public static ColorRGB FromRGB(int r, int g, int b)
+		{
+			var red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255d;
+			var green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255d;
+			var blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255d;
+
+			return new ColorRGB(red, green, blue);
+		}
+
+		public static ColorRGB FromRGBA(int r, int g, int b, double a)
+		{
+			var red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255d;
+			var green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255d;
+			var blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255d;
+			var alpha = (a > 1) ? 1 : ((a < 0) ? 0 : a);
+
+			return new ColorRGB(red, green, blue, alpha);
+		}
+
 		public static ColorRGB FromARGB(uint argb)
 		{
 			return new ColorRGB() { ValueARGB = argb };
@@ -168,9 +188,9 @@ namespace Styles
 		public uint ValueRGB
 		{
 			get{
-				var r = red.ToUInt8();
-				var g = green.ToUInt8();
-				var b = blue.ToUInt8();
+				var r = red.ToByte();
+				var g = green.ToByte();
+				var b = blue.ToByte();
 
 				return r << 16 | g << 8 | b;
 			}
@@ -179,16 +199,17 @@ namespace Styles
 				red = ((value >> 16) & 0xFF)/255d;
 				green = ((value >> 8) & 0xFF)/255d;
 				blue = (value & 0xFF) / 255d;
+				alpha = 1;
 			}
 		}
 
 		public uint ValueARGB
 		{
 			get {
-				var a = alpha.ToUInt8();
-				var r = red.ToUInt8();
-				var g = green.ToUInt8();
-				var b = blue.ToUInt8();
+				var a = alpha.ToByte();
+				var r = red.ToByte();
+				var g = green.ToByte();
+				var b = blue.ToByte();
 
 				return a << 24 | r << 16 | g << 8 | b;
 			}

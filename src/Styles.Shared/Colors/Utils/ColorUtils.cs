@@ -4,9 +4,9 @@ namespace Styles
 	public static class ColorUtils
 	{
 		#region Extension Methods
-		public static uint ToUInt8(this double value) 
+		public static uint ToByte(this double value) 
 		{
-			return (uint)(value * 255); 
+			return (uint)Math.Round(value * 255); 
 		}
 
 		public static bool IsDarkColor(this IColorSpace color)
