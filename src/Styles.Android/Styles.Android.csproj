@@ -57,9 +57,6 @@
       <Name>Styles.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.targets')" />
   <Import Project="..\..\..\StylesText\src\packages\NuGet.Build.Packaging.0.1.193\build\NuGet.Build.Packaging.targets" Condition="Exists('..\..\..\StylesText\src\packages\NuGet.Build.Packaging.0.1.193\build\NuGet.Build.Packaging.targets')" />

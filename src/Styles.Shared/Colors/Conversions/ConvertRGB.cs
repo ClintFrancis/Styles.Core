@@ -3,16 +3,14 @@ namespace Styles
 {
 	internal static class RgbConverter
 	{
-		internal static void ToColorSpace (IRgb color, IRgb item)
+		internal static void ToColorSpace (IRgb color)
 		{
-			item.R = color.R;
-			item.G = color.G;
-			item.B = color.B;
+			throw new NotImplementedException();
 		}
 
 		internal static IRgb ToColor (IRgb item)
 		{
-			return item;
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Styles.Android", "Styles.An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Styles.Shared", "Styles.Shared\Styles.Shared.csproj", "{F7DE4405-3FCD-497D-B1B1-BC8351C5804B}"
 EndProject
-Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "Styles.NuGet", "Styles.NuGet\Styles.NuGet.nuproj", "{70B0548A-EEF7-44A6-B819-D6D9175E3676}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +25,5 @@ Global
 		{F7DE4405-3FCD-497D-B1B1-BC8351C5804B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7DE4405-3FCD-497D-B1B1-BC8351C5804B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7DE4405-3FCD-497D-B1B1-BC8351C5804B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70B0548A-EEF7-44A6-B819-D6D9175E3676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70B0548A-EEF7-44A6-B819-D6D9175E3676}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70B0548A-EEF7-44A6-B819-D6D9175E3676}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70B0548A-EEF7-44A6-B819-D6D9175E3676}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

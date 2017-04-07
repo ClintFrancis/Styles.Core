@@ -5,9 +5,9 @@ namespace Styles
 	{
 		public static readonly ColorLAB Empty = new ColorLAB();
 
-		double l;
-		double a;
-		double b;
+		double _l;
+		double _a;
+		double _b;
 
 		#region Operators
 		public static bool operator ==(ColorLAB item1, ColorLAB item2)
@@ -32,38 +32,20 @@ namespace Styles
 
 		public double L
 		{
-			get
-			{
-				return l;
-			}
-			set
-			{
-				l = value;
-			}
+			get { return _l; }
+			set { _l = Math.Max(0, Math.Min(100, value)); }
 		}
 
 		public double A
 		{
-			get
-			{
-				return a;
-			}
-			set
-			{
-				a = value;
-			}
+			get { return _a; }
+			set { _a = Math.Max(-128, Math.Min(128, value)); }
 		}
 
 		public double B
 		{
-			get
-			{
-				return b;
-			}
-			set
-			{
-				b = value;
-			}
+			get { return _b; }
+			set { _b = Math.Max(-128, Math.Min(128, value)); }
 		}
 
 		/// <summary>
@@ -74,9 +56,11 @@ namespace Styles
 		/// <param name="b">B, from -128 to 128</param>
 		public ColorLAB(double l, double a, double b)
 		{
-			this.l = l;
-			this.a = a;
-			this.b = b;
+			_l = _a = _b = 0;
+
+			this.L = l;
+			this.A = a;
+			this.B = b;
 		}
 
 		public override bool Equals(Object obj)
@@ -88,7 +72,7 @@ namespace Styles
 
 		public override int GetHashCode()
 		{
-			return L.GetHashCode() ^ a.GetHashCode() ^ b.GetHashCode();
+			return L.GetHashCode() ^ A.GetHashCode() ^ B.GetHashCode();
 		}
 
 		#region IColorSpace implementation
@@ -104,13 +88,16 @@ namespace Styles
 		{
 			return ConvertLAB.ToColor(this);
 		}
+
+		public override string ToString()
+		{
+			return "lab(" + Math.Round(L, 2) + ", " + Math.Round(A, 2) + ", " + Math.Round(B, 2) + ")";
+		}
 		#endregion
 
 		public static ILab FromColor(IRgb color)
 		{
-			var result = ColorLAB.Empty;
-			result.Initialize(color);
-			return result;
+			return ConvertLAB.ToColorSpace(color);
 		}
 
 		public static IRgb ToColor(double l, double a, double b)

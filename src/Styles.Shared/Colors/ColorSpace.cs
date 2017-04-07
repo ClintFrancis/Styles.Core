@@ -58,6 +58,11 @@ namespace Styles
 		double R { get; set; }
 		double G { get; set; }
 		double B { get; set; }
+		double A { get; set; }
+
+		//byte Red { get; set; }
+		//byte Green { get; set; }
+		//byte Blue { get; set; }
 	}
 
 	public interface IXyz : IColorSpace
@@ -107,6 +112,10 @@ namespace Styles
 		double H { get; set; }
 		double S { get; set; }
 		double B { get; set; }
+
+		//double Hue { get; set; }
+		//double Saturation { get; set; }
+		//double Brightness { get; set; }
 	}
 
 	public interface IHunterLab : IColorSpace

@@ -3,18 +3,11 @@ namespace Styles
 {
 	public struct ColorXYZ : IXyz
 	{
-		/// <summary>
-		/// Gets the CIE D65 (white) structure.
-		/// </summary>
-		public static readonly ColorXYZ D65 = new ColorXYZ(0.9505, 1.0, 1.0890);
 		public static readonly ColorXYZ Empty = new ColorXYZ();
 
-
-		#region Fields
-		double x;
-		double y;
-		double z;
-		#endregion
+		double _x;
+		double _y;
+		double _z;
 
 		#region Operators
 		public static bool operator ==(ColorXYZ item1, ColorXYZ item2)
@@ -43,14 +36,8 @@ namespace Styles
 		/// </summary>
 		public double X
 		{
-			get
-			{
-				return this.x;
-			}
-			set
-			{
-				this.x = (value > 0.9505) ? 0.9505 : ((value < 0) ? 0 : value);
-			}
+			get { return _x;}
+			set { _x = Math.Max(0, Math.Min(100, value)); }
 		}
 
 		/// <summary>
@@ -58,14 +45,8 @@ namespace Styles
 		/// </summary>
 		public double Y
 		{
-			get
-			{
-				return this.y;
-			}
-			set
-			{
-				this.y = (value > 1.0) ? 1.0 : ((value < 0) ? 0 : value);
-			}
+			get { return _y; }
+			set { _y = Math.Max(0, Math.Min(100, value)); }
 		}
 
 		/// <summary>
@@ -73,14 +54,8 @@ namespace Styles
 		/// </summary>
 		public double Z
 		{
-			get
-			{
-				return this.z;
-			}
-			set
-			{
-				this.z = (value > 1.089) ? 1.089 : ((value < 0) ? 0 : value);
-			}
+			get { return _z; }
+			set { _z = Math.Max(0, Math.Min(100, value)); }
 		}
 
 		#endregion
@@ -88,14 +63,16 @@ namespace Styles
 		/// Initializes a new instance of the <see cref="T:Styles.Core.ColorXYZ"/> struct.
 		/// </summary>
 		/// <param name="x">X from 0 to 100</param>
-		/// <param name="y">Y from 0 to 1</param>
-		/// <param name="z">Z from 0 to 1</param>
+		/// <param name="y">Y from 0 to 100</param>
+		/// <param name="z">Z from 0 to 100</param>
 		// TODO fix the vairable ranges
 		public ColorXYZ(double x, double y, double z)
 		{
-			this.x = (x > 0.9505) ? 0.9505 : ((x < 0) ? 0 : x);
-			this.y = (y > 1.0) ? 1.0 : ((y < 0) ? 0 : y);
-			this.z = (z > 1.089) ? 1.089 : ((z < 0) ? 0 : z);
+			_x = _y = _z = 0;
+
+			this.X = x;
+			this.Y = y;
+			this.Z = z;
 		}
 
 		public override bool Equals(Object obj)
@@ -108,6 +85,11 @@ namespace Styles
 		public override int GetHashCode()
 		{
 			return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+		}
+
+		public override string ToString()
+		{
+			return "xyz(" + Math.Round(X, 2) + ", " + Math.Round(Y, 2) + ", " + Math.Round(Z, 2) + ")";
 		}
 
 		#region IColorSpace implementation
@@ -127,9 +109,7 @@ namespace Styles
 
 		public static IXyz FromColor(IRgb color)
 		{
-			var result = ColorXYZ.Empty;
-			result.Initialize(color);
-			return result;
+			return ConvertXYZ.ToColorSpace(color);
 		}
 
 		public static IRgb ToColor(double x, double y, double z)

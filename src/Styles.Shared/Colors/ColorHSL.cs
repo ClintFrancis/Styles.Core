@@ -8,6 +8,7 @@ namespace Styles
 		double hue;
 		double saturation;
 		double luminance;
+		double alpha;
 
 		#region Operators
 		public static bool operator ==(ColorHSL item1, ColorHSL item2)
@@ -34,41 +35,53 @@ namespace Styles
 
 		public double H
 		{
-			get
-			{
-				return hue;
+			get { return hue;}
+			set {  
+				hue = value % 1;
+				if (hue < 0) hue += 1;
 			}
+		}
+
+		public double Hue{
+			get { return Math.Round(hue * 360, 1); }
 			set
 			{
-				hue = MathUtils.Wrap(Math.Round(value, 2), 360);
+				value = value % 360;
+				if (value < 0)
+					value += 360;
+
+				hue = value / 360;
 			}
 		}
 
 		public double S
 		{
-			get
-			{
-				return saturation;
-			}
-			set
-			{
-				value = Math.Round(value, 4);
-				saturation = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return saturation; }
+			set { saturation = Math.Max(0, Math.Min(1, value)); }
+		}
+
+		public double Saturation
+		{
+			get { return Math.Round(saturation * 100, 2); }
+			set { saturation = Math.Max(0, Math.Min(100, value)); }
 		}
 
 		public double L
 		{
-			get
-			{
-				return luminance;
-			}
-			set
-			{
-				value = Math.Round(value, 4);
-				luminance = (value > 1) ? 1 : ((value < 0) ? 0 : value);
+			get { return luminance; }
+			set { luminance = Math.Max(0, Math.Min(1, value)); }
+		}
 
-			}
+		public double Luminance
+		{
+			get { return Math.Round(luminance * 100, 2); }
+			set { luminance = Math.Max(0, Math.Min(100, value)); }
+		}
+
+		public double A
+		{
+			get { return alpha; }
+			set { alpha = Math.Max(0, Math.Min(1, value)); }
 		}
 
 		#endregion
@@ -78,11 +91,14 @@ namespace Styles
 		/// <param name="h">Hue value, from 0 to 360</param>
 		/// <param name="s">Saturation, from 0 to 1</param>
 		/// <param name="l">Luminance, from 0 to 1</param> 
-		public ColorHSL(double h, double s, double l)
+		public ColorHSL(double h, double s, double l, double a = 1)
 		{
-			hue = MathUtils.Wrap(Math.Round(h), 360);
-			saturation = (s > 1) ? 1 : ((s < 0) ? 0 : s);
-			luminance = (l > 1) ? 1 : ((l < 0) ? 0 : l);
+			hue = saturation = luminance = alpha = 0;
+
+			this.H = h;
+			this.S = s;
+			this.L = l;
+			this.A = a;
 		}
 
 		public override bool Equals(Object obj)
@@ -97,6 +113,14 @@ namespace Styles
 			return H.GetHashCode() ^ S.GetHashCode() ^ L.GetHashCode();
 		}
 
+		public override string ToString()
+		{
+			if (this.alpha == 1)
+				return "hsl(" + Math.Round(this.H * 360, 1) + ", " + Math.Round(this.S * 100, 1) + "%, " + Math.Round(this.L * 100, 1) + "%)";
+            else
+                return "hsla(" + Math.Round(this.H * 360, 1) + ", " + Math.Round(this.S * 100, 1) + "%, " + Math.Round(this.L * 100, 1) + "%, " + Math.Round(this.alpha, 3) + ")";
+		}
+
 		#region IColorSpace implementation
 		public void Initialize(IRgb color)
 		{
@@ -104,6 +128,8 @@ namespace Styles
 			this.H = hsl.H;
 			this.S = hsl.S;
 			this.L = hsl.L;
+			// TODO Alpha
+			alpha = 1;
 		}
 
 		public IRgb ToRgb()
@@ -114,9 +140,7 @@ namespace Styles
 
 		public static IHsl FromColor(IRgb color)
 		{
-			var result = ColorHSL.Empty;
-			result.Initialize(color);
-			return result;
+			return ConvertHSL.ToColorSpace(color);
 		}
 
 		public static IRgb ToColor(double hue, double saturation, double luminosity)

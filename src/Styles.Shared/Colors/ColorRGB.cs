@@ -4,11 +4,8 @@ namespace Styles
 	public partial struct ColorRGB : IRgb
 	{
 		public static readonly ColorRGB Empty = new ColorRGB(0, 0, 0, 0);
-
-		double red;
-		double green;
-		double blue;
-		double alpha;
+		public static readonly ColorRGB White = new ColorRGB(1, 1, 1, 1);
+		public static readonly ColorRGB Black = new ColorRGB(0, 0, 0, 1);
 
 		#region Operators
 		public static bool operator ==(ColorRGB item1, ColorRGB item2)
@@ -32,43 +29,60 @@ namespace Styles
 		#endregion
 
 		#region Accessors
+
+		double red;
+		double green;
+		double blue;
+		double alpha;
+		
 		public double R
 		{
-			get { return red; }
-			set {
-				value = Math.Round(value, 4);
-				red = (value > 1) ? 1 : ((value < 0) ? 0 : value); 
-			}
+			get { return red;}
+			set { red = Math.Max(0, Math.Min(1, value)); }
+		}
+
+		public byte Red
+		{
+			get{ return (byte)Math.Round(this.R * 255); }
+			set{ this.R = value / 255; }
 		}
 
 		public double G
 		{
 			get { return green; }
-			set { 
-				value = Math.Round(value, 4);
-				green = (value > 1) ? 1 : ((value < 0) ? 0 : value); 
-			}
+			set { green = Math.Max(0, Math.Min(1, value)); }
+		}
+
+		public byte Green
+		{
+			get { return (byte)Math.Round(this.G * 255); }
+			set { this.G = value / 255; }
 		}
 
 		public double B
 		{
 			get { return blue; }
-			set { 
-				value = Math.Round(value, 4);
-				blue = (value > 1) ? 1 : ((value < 0) ? 0 : value); 
-			}
+			set { blue = Math.Max(0, Math.Min(1, value)); }
+		}
+
+		public byte Blue
+		{
+			get { return (byte)Math.Round(this.B * 255); }
+			set { this.B = value / 255; }
 		}
 
 		public double A
 		{
-			get { return Math.Round(alpha, 2); }
-			set { alpha = (value > 1) ? 1 : ((value < 0) ? 0 : value); }
+			get { return alpha; }
+			set { alpha = Math.Max(0, Math.Min(1, value)); }
 		}
 
-		public double AlphaRaw
+		public byte Alpha
 		{
-			get { return alpha;}
+			get { return (byte)Math.Round(this.A * 255); }
+			set { this.A = value / 255; }
 		}
+
 		#endregion
 
 		/// <summary>
@@ -80,10 +94,12 @@ namespace Styles
 		/// <param name="a">Alpha, from 0 to 1</param>
 		public ColorRGB(double r, double g, double b, double a = 1)
 		{
-			red = (r > 1) ? 1 : ((r < 0) ? 0 : r);
-			green = (g > 1) ? 1 : ((g < 0) ? 0 : g);
-			blue = (b > 1) ? 1 : ((b < 0) ? 0 : b);
-			alpha = (a > 1) ? 1 : ((a < 0) ? 0 : a);
+			red = green = blue = alpha = 0;
+
+			this.R = r;
+			this.G = g;
+			this.B = b;
+			this.A = a;
 		}
 
 		public override bool Equals(Object obj)
@@ -96,6 +112,13 @@ namespace Styles
 		public override int GetHashCode()
 		{
 			return R.GetHashCode() ^ G.GetHashCode() ^ B.GetHashCode();
+		}
+
+		public override string ToString()
+		{
+			if (alpha == 1) return "rgb(" + this.Red + ", " + this.Green + ", " + this.Blue + ")";
+
+			return "rgba(" + this.Red + ", " + this.Green + ", " + this.Blue + ", " + Math.Round(this.alpha, 3) + ")";
 		}
 
 		#region IColorSpace implementation
@@ -114,7 +137,7 @@ namespace Styles
 
 		public static ColorRGB FromHex(string hexString)
 		{
-			var colorString = hexString.Replace("#", "");
+			var colorString = hexString.Replace("#", "").ToUpper();
 			int alpha, red, green, blue;
 
 			switch (colorString.Length)
@@ -124,14 +147,14 @@ namespace Styles
 						red = Convert.ToInt32(string.Format("{0}{0}", colorString.Substring(0, 1)), 16);
 						green = Convert.ToInt32(string.Format("{0}{0}", colorString.Substring(1, 1)), 16);
 						blue = Convert.ToInt32(string.Format("{0}{0}", colorString.Substring(2, 1)), 16);
-						return new ColorRGB(red, green, blue);
+						return new ColorRGB(red / 255d, green / 255d, blue / 255d);
 					}
 				case 6: // #RRGGBB
 					{
 						red = Convert.ToInt32(colorString.Substring(0, 2), 16);
 						green = Convert.ToInt32(colorString.Substring(2, 2), 16);
 						blue = Convert.ToInt32(colorString.Substring(4, 2), 16);
-						return new ColorRGB(red, green, blue);
+						return new ColorRGB(red / 255d, green / 255d, blue / 255d);
 					}
 				case 8: // #AARRGGBB
 					{
@@ -139,87 +162,50 @@ namespace Styles
 						red = Convert.ToInt32(colorString.Substring(2, 2), 16);
 						green = Convert.ToInt32(colorString.Substring(4, 2), 16);
 						blue = Convert.ToInt32(colorString.Substring(6, 2), 16);
-						return new ColorRGB(red, green, blue, (alpha / 255d));
+						return new ColorRGB(red / 255d, green / 255d, blue / 255d, alpha / 255d);
 					}
 				default:
 					throw new ArgumentOutOfRangeException(string.Format("Invalid color value {0} is invalid. It should be a hex value of the form #RBG, #RRGGBB", hexString));
 			}
 		}
 
-		public static ColorRGB FromRGB(uint rgb)
+		public static ColorRGB FromRGB(uint value)
 		{
-			return new ColorRGB() { ValueRGB = rgb	};
+			return new ColorRGB(
+				((value >> 16) & 0xFF) / 255d, 
+				((value >> 8) & 0xFF) / 255d, 
+				(value & 0xFF) / 255d
+			);
 		}
 
 		public static ColorRGB FromRGB(int r, int g, int b)
 		{
-			var red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255d;
-			var green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255d;
-			var blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255d;
+			return FromRGB((byte)r, (byte)g, (byte)b);
+		}
 
-			return new ColorRGB(red, green, blue);
+		public static ColorRGB FromRGB(byte r, byte g, byte b)
+		{
+			return new ColorRGB(r / 255d, g / 255d, b / 255d);
 		}
 
 		public static ColorRGB FromRGBA(int r, int g, int b, double a)
 		{
-			var red = ((r > 255) ? 255 : ((r < 0) ? 0 : r)) / 255d;
-			var green = ((g > 255) ? 255 : ((g < 0) ? 0 : g)) / 255d;
-			var blue = ((b > 255) ? 255 : ((b < 0) ? 0 : b)) / 255d;
-			var alpha = (a > 1) ? 1 : ((a < 0) ? 0 : a);
-
-			return new ColorRGB(red, green, blue, alpha);
+			return FromRGBA((byte)r, (byte)g, (byte)b, a);
 		}
 
-		public static ColorRGB FromARGB(uint argb)
+		public static ColorRGB FromRGBA(byte r, byte g, byte b, double a)
 		{
-			return new ColorRGB() { ValueARGB = argb };
+			return new ColorRGB(r / 255d, g / 255d, b / 255d, a);
 		}
 
-		public string ToHex()
+		public static ColorRGB FromARGB(uint value)
 		{
-			return string.Format("#{0:X2}{1:X2}{2:X2}", (int)(red * 255), (int)(green * 255), (int)(blue * 255));
-		}
-
-		public string ToAlphaHex()
-		{
-			return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", (int)Math.Ceiling(alpha * 255), (int)(red * 255), (int)(green * 255), (int)(blue * 255));
-		}
-
-		public uint ValueRGB
-		{
-			get{
-				var r = red.ToByte();
-				var g = green.ToByte();
-				var b = blue.ToByte();
-
-				return r << 16 | g << 8 | b;
-			}
-
-			set{
-				red = ((value >> 16) & 0xFF)/255d;
-				green = ((value >> 8) & 0xFF)/255d;
-				blue = (value & 0xFF) / 255d;
-				alpha = 1;
-			}
-		}
-
-		public uint ValueARGB
-		{
-			get {
-				var a = alpha.ToByte();
-				var r = red.ToByte();
-				var g = green.ToByte();
-				var b = blue.ToByte();
-
-				return a << 24 | r << 16 | g << 8 | b;
-			}
-
-			set {
-				alpha = ((value >> 24) & 0xFF) / 255d;
-				red = ((value >> 16) & 0xFF) / 255d;
-				green = ((value >> 8) & 0xFF) / 255d;
-				blue = (value & 0xFF)/255d;
-			}
+			return new ColorRGB(
+				((value >> 16) & 0xFF) / 255d, 
+				((value >> 8) & 0xFF) / 255d, 
+				(value & 0xFF) / 255d,
+				((value >> 24) & 0xFF) / 255d
+			);
 		}
 	}
 }

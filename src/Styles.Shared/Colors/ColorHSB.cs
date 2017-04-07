@@ -8,6 +8,7 @@ namespace Styles
 		double hue;
 		double saturation;
 		double brightness;
+		double alpha;
 
 		#region Operators
 		public static bool operator ==(ColorHSB item1, ColorHSB item2)
@@ -32,65 +33,68 @@ namespace Styles
 		#region Accessors
 		public double H
 		{
-			get
-			{
-				return hue;
-			}
+			get { return hue;}
+			set {hue = Math.Max(0, Math.Min(1, value));}
+		}
+
+		public double Hue
+		{
+			get { return Math.Round(hue * 360, 1); }
 			set
 			{
-				hue = MathUtils.Wrap(Math.Round(value), 360);
+				value = value % 360;
+				if (value < 0)
+					value += 360;
+
+				hue = value / 360;
 			}
 		}
 
 		public double S
 		{
-			get
-			{
-				return saturation;
-			}
-			set
-			{
-				saturation = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return saturation; }
+			set { saturation = Math.Max(0, Math.Min(1, value)); }
+		}
+
+		public double Saturation
+		{
+			get { return Math.Round(saturation * 100, 2); }
+			set { saturation = Math.Max(0, Math.Min(100, value)); }
 		}
 
 		public double B
 		{
-			get
-			{
-				return brightness;
-			}
-			set
-			{
-				brightness = (value > 1) ? 1 : ((value < 0) ? 0 : value);
-			}
+			get { return brightness; }
+			set { brightness = Math.Max(0, Math.Min(1, value)); }
+		}
+
+		public double Brightness
+		{
+			get { return Math.Round(brightness * 100, 2); }
+			set { brightness = Math.Max(0, Math.Min(100, value)); }
+		}
+
+		public double A
+		{
+			get { return alpha; }
+			set { alpha = Math.Max(0, Math.Min(1, value)); }
 		}
 		#endregion
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Styles.Core.ColorHSB"/> struct.
 		/// </summary>
-		/// <param name="h">Hue value, from 0 to 360</param>
+		/// <param name="h">Hue value, from 0 to 1</param>
 		/// <param name="s">Saturation, from 0 to 1</param>
 		/// <param name="b">Brightness, from 0 to 1</param>
 		public ColorHSB(double h, double s, double b)
 		{
-			hue = MathUtils.Wrap(Math.Round(h), 360);
-			saturation = (s > 1) ? 1 : ((s < 0) ? 0 : s);
-			brightness = (b > 1) ? 1 : ((b < 0) ? 0 : b);
-		}
+			hue = saturation = brightness = 0;
+			alpha = 1;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Styles.Core.ColorHSB"/> struct.
-		/// </summary>
-		/// <param name="h">Hue value, from 0 to 360</param>
-		/// <param name="s">Saturation, from 0 to 100</param>
-		/// <param name="b">Brightness, from 0 to 100</param>
-		public ColorHSB(int h, int s, int b)
-		{
-			hue = MathUtils.Wrap(h, 360);
-			saturation = s / 100d;
-			brightness = b / 100d;
+			H = h;
+			S = s;
+			B = b;
 		}
 
 		public override bool Equals(Object obj)
@@ -105,13 +109,21 @@ namespace Styles
 			return H.GetHashCode() ^ S.GetHashCode() ^ B.GetHashCode();
 		}
 
+		public override string ToString()
+		{
+			if (alpha == 1)
+				return "hsv(" + Math.Round(hue * 360, 1) + ", " + Math.Round(saturation * 100, 1) + "%, " + Math.Round(brightness * 100, 1) + "%)";
+			return "hsva(" + Math.Round(hue * 360, 1) + ", " + Math.Round(saturation * 100, 1) + "%, " + Math.Round(brightness * 100, 1) + "%, " + Math.Round(this.alpha, 3) + ")";
+		}
+
 		#region IColorSpace implementation
 		public void Initialize(IRgb color)
 		{
-			var hsb = ConvertHSB.ToColorSpace(color);
-			this.H = hsb.H;
-			this.S = hsb.S;
-			this.B = hsb.B;
+			var hsl = ConvertHSB.ToColorSpace(color);
+			this.H = hsl.H;
+			this.S = hsl.S;
+			this.B = hsl.B;
+			alpha = 1;
 		}
 
 		public IRgb ToRgb()
@@ -122,9 +134,7 @@ namespace Styles
 
 		public static IHsb FromColor(IRgb color)
 		{
-			var hsb = ColorHSB.Empty;
-			hsb.Initialize(color);
-			return hsb;
+			return ConvertHSB.ToColorSpace(color);
 		}
 
 		public static IRgb ToColor(double hue, double saturation, double brightness)
