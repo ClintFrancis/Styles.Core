@@ -10,14 +10,14 @@ namespace Styles
 		/// </summary>
 		/// <value>The color.</value>
 		[CssAttribute("color")]
-		public string Color { get; set; }
+		public ColorRGB Color { get; set; }
 
 		/// <summary>
 		/// Specifies the color of the background.
 		/// </summary>
 		/// <value>The color of the background.</value>
 		[CssAttribute("background-color")]
-		public string BackgroundColor { get; set; }
+		public ColorRGB BackgroundColor { get; set; }
 
 		/// <summary>
 		/// A shorthand property for setting all the padding properties in one declaration
@@ -78,6 +78,8 @@ namespace Styles
 			PaddingLeft = float.MinValue;
 			PaddingRight = float.MinValue;
 			PaddingTop = float.MinValue;
+			Color = ColorRGB.Empty;
+			BackgroundColor = ColorRGB.Empty;
 		}
 
 		public virtual void SetValue(string propertyName, object value)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Styles;
 
 namespace Styles
 {
@@ -11,7 +12,7 @@ namespace Styles
 		public ColorRGB DetailColor { get; set; }
 	}
 
-	public class ColorCount
+	public struct ColorCount
 	{
 		public ColorRGB Color { get; set; }
 		public int Count { get; set; }
@@ -34,8 +35,8 @@ namespace Styles
 			var result = new ColorSet();
 
 			var randomColorsThreshold = (bitmap.Height * 0.01);
-			var blackColor = new ColorRGB(0, 0, 0, 1);
-			var whiteColor = new ColorRGB(1, 1, 1, 1);
+			var blackColor = ColorRGB.Black;
+			var whiteColor = ColorRGB.White;
 
 			var leftEdgeColors = new List<ColorRGB>();
 			var imageColors = bitmap.GetColorArray();
@@ -154,9 +155,6 @@ namespace Styles
 				}
 			}
 
-
-			// TODO reevaluate
-			/*
 			var isDarkBackground = result.BackgroundColor.IsDarkColor ();
 			if (result.PrimaryColor == ColorRGB.Empty)
 				result.PrimaryColor = isDarkBackground ? whiteColor : blackColor;
@@ -166,7 +164,6 @@ namespace Styles
 
 			if (result.DetailColor == ColorRGB.Empty)
 				result.DetailColor = isDarkBackground ? whiteColor : blackColor;
-			*/
 
 			return result;
 		}

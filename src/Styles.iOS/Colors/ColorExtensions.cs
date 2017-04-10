@@ -17,6 +17,18 @@ namespace Styles
 		}
 
 		/// <summary>
+		/// Converts a UIColor value to a ColorRGB object.
+		/// </summary>
+		/// <returns>ColorRGB</returns>
+		/// <param name="color">Target UIColor</param>
+		public static ColorRGB ToColorRGB(this UIColor color)
+		{
+			nfloat r, g, b, a = 0f;
+			color.GetRGBA(out r, out g, out b, out a);
+			return new ColorRGB(r, g, b, a);
+		}
+
+		/// <summary>
 		/// Converts a UIColor value to a string hex value.
 		/// </summary>
 		/// <returns>A string hex value</returns>
