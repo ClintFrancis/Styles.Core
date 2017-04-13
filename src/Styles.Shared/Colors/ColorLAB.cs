@@ -104,6 +104,16 @@ namespace Styles
 		{
 			return new ColorLAB(l, a, b).ToRgb();
 		}
+
+		public static ColorLAB FromLAB(int l, int a, int b)
+		{
+			return new ColorLAB()
+			{
+				L = l,
+				A = a,
+				B = b
+			};
+		}
 	}
 }
 

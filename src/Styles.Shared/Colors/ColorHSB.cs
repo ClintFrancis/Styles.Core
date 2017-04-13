@@ -141,6 +141,21 @@ namespace Styles
 		{
 			return new ColorHSB(hue, saturation, brightness).ToRgb();
 		}
+
+		public static ColorHSB FromHSB(int h, int s, int b)
+		{
+			return FromHSB((byte)h, (byte)s, (byte)b);
+		}
+
+		public static ColorHSB FromHSB(byte h, byte s, byte b)
+		{
+			return new ColorHSB()
+			{
+				Hue = h,
+				Saturation = s,
+				Brightness = b
+			};
+		}
 	}
 }
 

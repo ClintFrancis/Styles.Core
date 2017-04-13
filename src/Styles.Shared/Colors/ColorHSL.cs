@@ -147,6 +147,21 @@ namespace Styles
 		{
 			return new ColorHSL(hue, saturation, luminosity).ToRgb();
 		}
+
+		public static ColorHSL FromHSL(int h, int s, int l)
+		{
+			return FromHSL((byte)h, (byte)s, (byte)l);
+		}
+
+		public static ColorHSL FromHSL(byte h, byte s, byte l)
+		{
+			return new ColorHSL()
+			{
+				Hue = h,
+				Saturation = s,
+				Luminance = l
+			};
+		}
 	}
 }
 

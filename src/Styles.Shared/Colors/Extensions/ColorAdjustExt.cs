@@ -46,6 +46,13 @@ namespace Styles
 			return (ColorRGB)hsl.ToRgb();
 		}
 
+		public static ColorRGB WithAlpha(this IColorSpace color, double amount)
+		{
+			var rgb = (ColorRGB)color.ToRgb();
+			rgb.A = amount;
+			return rgb;
+		}
+
 		public static ColorRGB Complementary(this IColorSpace color)
 		{
 			return color.AdjustHue(180);
