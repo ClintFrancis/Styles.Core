@@ -30,14 +30,14 @@ namespace Styles
 				}
 				h = h / 6;
 			}
-			return new ColorHSL(h, s, l);
+			return new ColorHSL(h, s, l, rgb.A);
 		}
 
 		public static ColorRGB ToColor(IHsl hsl)
 		{
 			if (hsl.S == 0)
 			{
-				return new ColorRGB(hsl.L, hsl.L, hsl.L);
+				return new ColorRGB(hsl.L, hsl.L, hsl.L, hsl.A);
 			}
 			else
 			{
@@ -69,7 +69,7 @@ namespace Styles
 					else
 						T[i] = p;
 				}
-				return new ColorRGB(T[0], T[1], T[2]);
+				return new ColorRGB(T[0], T[1], T[2], hsl.A);
 			}
 		}
 	}

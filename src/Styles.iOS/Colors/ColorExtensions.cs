@@ -7,13 +7,24 @@ namespace Styles
 	public static class ColorExtensions
 	{
 		/// <summary>
-		/// Convert a ColorRGB to a Native UIColor instace.
+		/// Converts an IColorSpace to a Native UIColor instace.
 		/// </summary>
 		/// <returns>UIColor/returns>
 		/// <param name="color">Color.</param>
-		public static UIColor ToNative(this ColorRGB color)
+		public static UIColor ToNative(this IColorSpace color)
 		{
-			return UIColor.FromRGBA((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, (nfloat)color.A);
+			var rgb = color.ToRgb();
+			return UIColor.FromRGBA((nfloat)rgb.R, (nfloat)rgb.G, (nfloat)rgb.B, (nfloat)rgb.A);
+		}
+
+		public static UIColor[] ToNative(this IRgb[] colors)
+		{
+			var uiColors = new UIColor[colors.Length];
+			for (int i = 0; i < colors.Length; i++)
+			{
+				uiColors[i] = colors[i].ToNative();
+			}
+			return uiColors;
 		}
 
 		/// <summary>

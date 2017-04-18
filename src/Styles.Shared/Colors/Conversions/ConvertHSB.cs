@@ -26,7 +26,7 @@ namespace Styles
 				ss = 0;
 			ll = ll / 2;
 
-			return new ColorHSL(hh, ss, ll);
+			return new ColorHSL(hh, ss, ll, color.A);
 		}
 
 		static IHsb FromHSL(IHsl color)

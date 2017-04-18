@@ -77,6 +77,7 @@ namespace Styles
 		double H { get; set; }
 		double S { get; set; }
 		double L { get; set; }
+		double A { get; set; }
 	}
 
 	public interface ILab : IColorSpace
@@ -112,10 +113,7 @@ namespace Styles
 		double H { get; set; }
 		double S { get; set; }
 		double B { get; set; }
-
-		//double Hue { get; set; }
-		//double Saturation { get; set; }
-		//double Brightness { get; set; }
+		double A { get; set; }
 	}
 
 	public interface IHunterLab : IColorSpace
