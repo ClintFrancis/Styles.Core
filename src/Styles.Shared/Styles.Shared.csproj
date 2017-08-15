@@ -68,6 +68,7 @@
     <Compile Include="Colors\Extensions\ColorValueExt.cs" />
     <Compile Include="Colors\Conversions\ConvertArrays.cs" />
     <Compile Include="Colors\ColorUtils.cs" />
+    <Compile Include="Colors\RGBA.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Colors\Extensions\" />
